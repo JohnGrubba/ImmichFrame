@@ -1,5 +1,6 @@
 services:
   immichframe:
+    restart: always
     build:
       context: ..
     ports:
