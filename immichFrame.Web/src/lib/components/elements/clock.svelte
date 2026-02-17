@@ -25,10 +25,10 @@
 	const timePortion = $derived(() => format(now, $configStore.clockFormat ?? 'HH:mm:ss'));
 
 	const primaryIconId = $derived(() => {
-        if (!weather?.iconId) return null;
-        const firstId = weather.iconId.split(',')[0].trim();
-        return firstId || null;
-    });
+		if (!weather?.iconId) return null;
+		const firstId = weather.iconId.split(',')[0].trim();
+		return firstId || null;
+	});
 
 	onMount(() => {
 		const interval = setInterval(() => {
@@ -60,13 +60,13 @@
 
 <div
 	id="clock"
-	class="fixed bottom-0 left-0 z-10 text-center text-primary
+	class="fixed bottom-0 left-0 z-10 text-left text-primary
 	{$configStore.style == 'solid' ? 'bg-secondary rounded-tr-2xl' : ''}
 	{$configStore.style == 'transition' ? 'bg-gradient-to-r from-secondary from-0% pr-10' : ''}
 	{$configStore.style == 'blur' ? 'backdrop-blur-lg rounded-tr-2xl' : ''}	
 	drop-shadow-2xl p-3"
 >
-	<p id="clockdate" class="mt-2 text-sm sm:text-sm md:text-md lg:text-xl font-thin text-shadow-sm">
+	<p id="clockdate" class="mt-2 ml-2 text-md lg:text-xl font-bold text-shadow-sm">
 		{formattedDate()}
 	</p>
 	<p
@@ -76,29 +76,32 @@
 		{timePortion()}
 	</p>
 	{#if weather}
-    <div id="clockweather">
-        <div
-            id="clockweatherinfo"
-            class="text-xl sm:text-xl md:text-2xl lg:text-3xl font-semibold text-shadow-sm weather-info"
-        >
-            {#if $configStore.weatherIconUrl && primaryIconId()}
-                <img 
-                    src="{$configStore.weatherIconUrl.replace('{IconId}', encodeURIComponent(primaryIconId()!))}" 
-                    class="icon-weather" 
-                    alt="{weather.description}"
-                >
-            {/if}
-            
-            <div class="weather-location">{weather.location},</div>
-            <div class="weather-temperature">{weather.temperature?.toFixed(1)}</div>
-            <div class="weather-unit">{weather.unit}</div>
-        </div>
-        
-        {#if $configStore.showWeatherDescription}
-            <p id="clockweatherdesc" class="text-sm sm:text-sm md:text-md lg:text-xl text-shadow-sm">
-                {weather.description}
-            </p>
-        {/if}
-    </div>
-{/if}
+		<div id="clockweather">
+			<div
+				id="clockweatherinfo"
+				class="text-xl sm:text-xl md:text-2xl lg:text-3xl font-semibold text-shadow-sm weather-info flex items-center"
+			>
+				<div class="weather-temperature">{weather.temperature?.toFixed(1)}</div>
+				<div class="weather-unit">{weather.unit}</div>
+
+				{#if $configStore.weatherIconUrl && primaryIconId()}
+					<img
+						src={$configStore.weatherIconUrl.replace(
+							'{IconId}',
+							encodeURIComponent(primaryIconId()!)
+						)}
+						class="icon-weather h-10 w-10"
+						alt={weather.description}
+					/>
+				{/if}
+				<div class="weather-location">{weather.location}</div>
+			</div>
+
+			{#if $configStore.showWeatherDescription}
+				<p id="clockweatherdesc" class="text-sm sm:text-sm md:text-md lg:text-xl text-shadow-sm">
+					{weather.description}
+				</p>
+			{/if}
+		</div>
+	{/if}
 </div>

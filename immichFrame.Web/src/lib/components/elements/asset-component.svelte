@@ -104,6 +104,7 @@
 				<div class="grid grid-cols-2">
 					<div id="image_portrait_1" class="relative grid border-r-2 border-primary h-dvh-safe">
 						<Asset
+							first_split={true}
 							asset={assets[0]}
 							{interval}
 							{showLocation}

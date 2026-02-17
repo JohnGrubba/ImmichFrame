@@ -11,6 +11,7 @@
 	import ImageOverlay from '$lib/components/elements/imageoverlay/image-overlay.svelte';
 
 	interface Props {
+		first_split?: boolean;
 		asset: [url: string, asset: AssetResponseDto, albums: AlbumResponseDto[]];
 		showLocation: boolean;
 		showPhotoDate: boolean;
@@ -31,6 +32,7 @@
 
 	let {
 		asset,
+		first_split = false,
 		showLocation,
 		showPhotoDate,
 		showImageDesc,
@@ -271,6 +273,7 @@
 	{showTagsDesc}
 	{showAlbumName}
 	{split}
+	{first_split}
 />
 <img class="absolute flex w-full h-full z-[-1]" src={thumbhashUrl} alt="data" />
 

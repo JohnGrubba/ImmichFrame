@@ -16,6 +16,7 @@
 		showTagsDesc: boolean;
 		showAlbumName: boolean;
 		split: boolean;
+		first_split?: boolean;
 	}
 
 	let {
@@ -28,6 +29,7 @@
 		showTagsDesc,
 		showAlbumName,
 		split,
+		first_split = false
 	}: Props = $props();
 
 	function formatLocation(format: string, city?: string, state?: string, country?: string) {
@@ -73,10 +75,11 @@
 {#if showPhotoDate || showLocation || showImageDesc || showPeopleDesc || showTagsDesc || showAlbumName}
 	<div
 		id="imageinfo"
-		class="immichframe_image_metadata absolute bottom-0 right-0 z-100 text-primary p-1 text-right
+		class="immichframe_image_metadata absolute z-100 text-primary p-1 text-right
 		{$configStore.style == 'solid' ? 'bg-secondary rounded-tl-2xl' : ''}
 		{$configStore.style == 'transition' ? 'bg-gradient-to-l from-secondary from-0% pl-10' : ''}
-		{$configStore.style == 'blur' ? 'backdrop-blur-lg rounded-tl-2xl' : ''}	"
+		{$configStore.style == 'blur' ? 'backdrop-blur-lg rounded-tl-2xl' : ''}
+		{first_split ? 'top-0 left-0' : 'bottom-0 right-0'} "
 	>
 		{#if showPhotoDate && formattedDate}
 			<p id="photodate" class="info-item">
@@ -93,19 +96,25 @@
 		{#if showAlbumName && albums && albums.length > 0}
 			<p id="imagealbums" class="info-item">
 				<Icon path={mdiImageAlbum} />
-				<span class="info-text" class:short-text={split}>{albums.map((x) => x.albumName).join(', ')}</span>
+				<span class="info-text" class:short-text={split}
+					>{albums.map((x) => x.albumName).join(', ')}</span
+				>
 			</p>
 		{/if}
 		{#if showPeopleDesc && availablePeople && availablePeople.length > 0}
 			<p id="peopledescription" class="info-item">
 				<Icon path={mdiAccount} />
-				<span class="info-text" class:short-text={split}>{availablePeople.map((x) => x.name).join(', ')}</span>
+				<span class="info-text" class:short-text={split}
+					>{availablePeople.map((x) => x.name).join(', ')}</span
+				>
 			</p>
 		{/if}
 		{#if showTagsDesc && availableTags && availableTags.length > 0}
 			<p id="tagsdescription" class="info-item">
 				<Icon path={mdiTag} />
-				<span class="info-text" class:short-text={split}>{availableTags.map((x) => x.name).join(', ')}</span>
+				<span class="info-text" class:short-text={split}
+					>{availableTags.map((x) => x.name).join(', ')}</span
+				>
 			</p>
 		{/if}
 		{#if showLocation && location}
