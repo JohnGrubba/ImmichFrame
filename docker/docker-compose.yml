@@ -1,15 +1,10 @@
-name: immichframe
 services:
   immichframe:
-    container_name: immichframe
-    image: ghcr.io/immichframe/immichframe:latest
-    restart: on-failure
-    # volumes:
-    #   - PATH/TO/CONFIG:/app/Config
-    #   - PATH/TO/CUSTOMCSS/custom.css:/app/wwwroot/static/custom.css
+    build:
+      context: ..
     ports:
-      - "8080:8080"
+      - 8414:8080
     env_file:
       - .env
-    environment:
-      TZ: "Europe/Berlin"
+    volumes:
+      - ./Settings.yml:/app/Config/Settings.yml
